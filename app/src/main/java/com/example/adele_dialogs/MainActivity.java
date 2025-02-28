@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
      private void initElements () {
+        etFirstName = findViewById(R.id.etFirstName);
+        // todo add all fields
         tvRegistration = findViewById(R.id.tvRegistration);
         btPronounce = findViewById(R.id.btPronounce);
         btPronounce.setOnClickListener(this);
@@ -64,19 +66,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (v == btSave){
             Log.d(TAG, "onClick:Save");
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle("Save error");
-            alertDialogBuilder.setMessage("You didn't fill all fields");
-            alertDialogBuilder.setCancelable(true);
-            alertDialogBuilder.setNegativeButton("Cancel", new HandleAlertDialogClickListener());
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
+            //todo check fields
+            if (true){
+                createAlertDialog();
+            } else {
+                createSaveDialog();
+            }
 
         }
 
      }
 
-     private class HandleAlertDialogClickListener implements DialogInterface.OnClickListener {
+    private void createAlertDialog() {
+        AlertDialog.Builder errorDialogBuilder = new AlertDialog.Builder(this);
+        errorDialogBuilder.setTitle("Save error");
+        errorDialogBuilder.setMessage("You didn't fill all fields");
+        errorDialogBuilder.setCancelable(true);
+        errorDialogBuilder.setNegativeButton("Cancel", new HandleAlertDialogClickListener());
+        AlertDialog errorDialog = errorDialogBuilder.create();
+        errorDialog.show();
+    }
+
+    private void createSaveDialog() {
+        HandleAlertDialogClickListener handleAlertDialogClickListener = new HandleAlertDialogClickListener();
+
+        AlertDialog.Builder saveDialogBuilder = new AlertDialog.Builder(this);
+        saveDialogBuilder.setTitle("Are you sure?");
+        saveDialogBuilder.setMessage("Are you sure you want to save with name: " + etFirstName.getText().toString());
+        saveDialogBuilder.setCancelable(true);
+        saveDialogBuilder.setPositiveButton("Yes, Im sure", handleAlertDialogClickListener);
+        saveDialogBuilder.setNegativeButton("No, let me look again", handleAlertDialogClickListener);
+        AlertDialog saveDialog = saveDialogBuilder.create();
+        saveDialog.show();
+    }
+
+    private class HandleAlertDialogClickListener implements DialogInterface.OnClickListener {
 
          @Override
          public void onClick(DialogInterface dialog, int which) {

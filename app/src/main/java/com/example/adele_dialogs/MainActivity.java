@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -63,8 +64,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (v == btSave){
             Log.d(TAG, "onClick:Save");
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("Save error");
+            alertDialogBuilder.setMessage("You didn't fill all fields");
+            alertDialogBuilder.setCancelable(true);
+            alertDialogBuilder.setNegativeButton("Cancel", new HandleAlertDialogClickListener());
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
 
-         }
+        }
 
      }
 
